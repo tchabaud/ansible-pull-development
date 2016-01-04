@@ -7,10 +7,10 @@
     - name: create groups based on distribution
       group_by: key={{ ansible_distribution }}
   environment:
-    http_proxy: {{ ansible_env.http_proxy }}
-    https_proxy: {{ ansible_env.https_proxy }}
-    ftp_proxy: {{ ansible_env.ftp_proxy }}
-    no_proxy:  {{ ansible_env.no_proxy }}
+    http_proxy: "{{ ansible_env.http_proxy }}"
+    https_proxy: "{{ ansible_env.https_proxy }}"
+    ftp_proxy: "{{ ansible_env.ftp_proxy }}"
+    no_proxy: "{{ ansible_env.no_proxy }}"
 
 - name: Install Version Control Systems
   hosts: Ubuntu
