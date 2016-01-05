@@ -3,6 +3,11 @@
 - name: Gather prerequisites 
   hosts: all
   gather_facts: True
+  environment:
+    http_proxy: "{{ ansible_env.http_proxy }}"
+    https_proxy: "{{ ansible_env.https_proxy }}"
+    ftp_proxy: "{{ ansible_env.ftp_proxy }}"
+    no_proxy: "{{ ansible_env.no_proxy }}"
   tasks:
     - name: create groups based on distribution
       group_by: key={{ ansible_distribution }}
@@ -129,11 +134,6 @@
   tasks:
       - name: Download Node
         get_url: url=https://nodejs.org/dist/{{ node_version }}/node-{{ node_version }}-linux-x64.tar.gz dest=/root/node.tar.gz mode=444
-        environment:
-          http_proxy: "{{ ansible_env.http_proxy }}"
-          https_proxy: "{{ ansible_env.https_proxy }}"
-          ftp_proxy: "{{ ansible_env.ftp_proxy }}"
-          no_proxy: "{{ ansible_env.no_proxy }}"
       - name: Unpack Node
         unarchive: src=/root/node.tar.gz dest=/opt copy=no owner=root group=root creates=/opt/node-{{ node_version }}-linux-x64/LICENSE
       - name: Soft-link Node
